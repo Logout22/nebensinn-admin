@@ -10,7 +10,6 @@
           - apt-listchanges
           - needrestart
           - mailutils
-          - needrestart
           - default-dbus-session-bus
           - python3-apt-dbg
           - python3-dbus-dbg
