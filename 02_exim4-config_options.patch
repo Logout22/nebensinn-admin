@@ -1,0 +1,15 @@
+diff --git a/old/02_exim4-config_options b/new/02_exim4-config_options
+index abff1d8..aeba4f5 100644
+--- a/old/02_exim4-config_options
++++ b/new/02_exim4-config_options
+@@ -155,8 +155,8 @@ untrusted_set_sender = *
+ # to accept unqualified addresses from certain hosts. When this is done,
+ # unqualified addresses are qualified using the settings of qualify_domain
+ # and/or qualify_recipient (see above).
+-# sender_unqualified_hosts = <unset>
+-# recipient_unqualified_hosts = <unset>
++sender_unqualified_hosts = *
++recipient_unqualified_hosts = *
+ 
+ 
+ # Configure Exim to support the "percent hack" for certain domains.

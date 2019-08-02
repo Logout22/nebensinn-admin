@@ -3,7 +3,7 @@
   hosts: site
 
   tasks:
-    - name: set up unattended upgrades and email
+    - name: install packages for unattended upgrades and email
       apt:
         name:
           - unattended-upgrades
@@ -17,3 +17,44 @@
           - swaks
           - dns-root-data
           - file
+
+    - pause:
+        prompt: Please run dpkg-reconfigure exim4-config on the host now
+
+    - pause:
+        prompt: Please provide SMTP login data in passwd.client in form *:username:password
+
+    - name: copy user credentials
+      copy:
+        src: passwd.client
+        dest: /etc/exim4
+
+    - name: copy exim variables
+      copy:
+        src: exim4.conf.localmacros
+        dest: /etc/exim4
+
+    - name: install patch command
+      apt:
+        name: patch
+
+    - name: allow unqualified domains (e.g. email to root)
+      patch:
+        basedir: /etc/exim4/conf.d/main
+        src: 02_exim4-config_options.patch
+        strip: 2
+
+    - name: update exim configuration
+      command: update-exim4.conf
+
+    - name: restart exim server
+      systemd:
+        name: exim4
+        state: restarted
+
+    - name: send test email
+      mail:
+        subject: Test email from Ansible
+
+    - pause:
+        prompt: Please check if the test email arrived.
