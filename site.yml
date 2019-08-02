@@ -1,5 +1,6 @@
 ---
 - name: set up unattended upgrades and email
+  hosts: site
 
   apt:
     name:
