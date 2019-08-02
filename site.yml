@@ -1,17 +1,19 @@
 ---
-- name: set up unattended upgrades and email
+- name: Set up host for nebensinn site
   hosts: site
 
-  apt:
-    name:
-      - unattended-upgrades
-      - apt-listchanges
-      - needrestart
-      - mailutils
-      - needrestart
-      - default-dbus-session-bus
-      - python3-apt-dbg
-      - python3-dbus-dbg
-      - eximon4
-      - swaks
-      - dns-root-data
+  tasks:
+    - name: set up unattended upgrades and email
+      apt:
+        name:
+          - unattended-upgrades
+          - apt-listchanges
+          - needrestart
+          - mailutils
+          - needrestart
+          - default-dbus-session-bus
+          - python3-apt-dbg
+          - python3-dbus-dbg
+          - eximon4
+          - swaks
+          - dns-root-data
