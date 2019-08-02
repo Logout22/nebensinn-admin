@@ -34,23 +34,21 @@
         src: exim4.conf.localmacros
         dest: /etc/exim4
 
-    - name: install patch command
-      apt:
-        name: patch
-
     - name: allow unqualified domains (e.g. email to root)
-      patch:
-        basedir: /etc/exim4/conf.d/main
-        src: 02_exim4-config_options.patch
-        strip: 2
+      block:
+      - lineinfile:
+          dest: "/etc/exim4/conf.d/main/02_exim4-config_options"
+          regexp: "^#? sender_unqualified_hosts ="
+          line: " sender_unqualified_hosts = *"
+        notify: restart exim
+      - lineinfile:
+          dest: "/etc/exim4/conf.d/main/02_exim4-config_options"
+          regexp: "^#? recipient_unqualified_hosts ="
+          line: " recipient_unqualified_hosts = *"
+        notify: restart exim
 
-    - name: update exim configuration
-      command: update-exim4.conf
-
-    - name: restart exim server
-      systemd:
-        name: exim4
-        state: restarted
+    - name: ensure exim4 is reloaded if need be
+      meta: flush_handlers
 
     - name: send test email
       mail:
@@ -58,3 +56,13 @@
 
     - pause:
         prompt: Please check if the test email arrived.
+
+  handlers:
+    - name: update exim configuration
+      command: update-exim4.conf
+      listen: "restart exim"
+    - name: restart exim server
+      systemd:
+        name: exim4
+        state: restarted
+      listen: "restart exim"
