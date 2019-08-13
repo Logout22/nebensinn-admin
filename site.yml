@@ -183,6 +183,9 @@
           regexp: '^(//)?Unattended-Upgrade::Automatic-Reboot-Time "02:00";'
           line: 'Unattended-Upgrade::Automatic-Reboot-Time "02:00";'
 
+    - name: test automated upgrades
+      command: unattended-upgrade -d
+
   handlers:
     - name: update exim configuration
       command: update-exim4.conf
