@@ -1,2 +1,6 @@
+ansible.cfg
 passwd.client
+!/roles
+/roles/*
+!/roles/requirements.yml
 venv/
