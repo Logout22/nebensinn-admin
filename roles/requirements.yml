@@ -1,2 +1,5 @@
+- geerlingguy.postfix
+- name: ansible-role-postfix
+  src: https://github.com/Logout22/ansible-role-postfix
 - name: change-ssh-port
   src: https://github.com/Logout22/ansible-change-ssh-port

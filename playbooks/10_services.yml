@@ -1,6 +1,22 @@
 ---
 - name: Set up services for nebensinn site
   hosts: site
+  vars:
+      postfix_domain: 'nebensinn.com'
+      postfix_notify_email: 'webmaster@nebensinn.com'
+      postfix_relay_server: 'smtp.ionos.de'
+      postfix_use_smtp: true
+      postfix_smtp_sasl_password_maps: 'hash:/etc/postfix/sasl_passwd'
+  vars_prompt:
+    - name: postfix_relayhost_user
+      prompt: "Email user name?"
+      private: no
+
+    - name: postfix_relayhost_pass
+      prompt: "Email password?"
+
   gather_facts: no
   roles:
       - ansible-change-ssh-port
+      - ansible-role-postfix
+      - geerlingguy.postfix
