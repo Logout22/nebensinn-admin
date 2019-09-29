@@ -1,4 +1,5 @@
 - geerlingguy.postfix
+- jnv.unattended-upgrades
 - name: ansible-role-postfix
   src: https://github.com/Logout22/ansible-role-postfix
 - name: change-ssh-port

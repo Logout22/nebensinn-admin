@@ -1,12 +1,6 @@
 ---
 - name: Set up services for nebensinn site
   hosts: site
-  vars:
-      postfix_domain: 'nebensinn.com'
-      postfix_notify_email: 'webmaster@nebensinn.com'
-      postfix_relay_server: 'smtp.ionos.de'
-      postfix_use_smtp: true
-      postfix_smtp_sasl_password_maps: 'hash:/etc/postfix/sasl_passwd'
   vars_prompt:
     - name: postfix_relayhost_user
       prompt: "Email user name?"
@@ -17,6 +11,20 @@
 
   gather_facts: no
   roles:
-      - ansible-change-ssh-port
-      - ansible-role-postfix
-      - geerlingguy.postfix
+  - role: ansible-change-ssh-port
+  - role: ansible-role-postfix
+    postfix_domain: 'nebensinn.com'
+    postfix_notify_email: 'webmaster@nebensinn.com'
+    postfix_relay_server: 'smtp.ionos.de'
+    postfix_use_smtp: true
+    postfix_smtp_sasl_password_maps: 'hash:/etc/postfix/sasl_passwd'
+  - role: geerlingguy.postfix
+  - role: jnv.unattended-upgrades
+    unattended_origins_patterns:
+    - 'origin=Debian,codename=${distro_codename}-updates'
+    - 'origin=Debian,codename=${distro_codename},label=Debian'
+    - 'origin=Debian,codename=${distro_codename},label=Debian-Security'
+    unattended_mail: 'webmaster@nebensinn.com'
+    unattended_remove_unused_dependencies: true
+    unattended_automatic_reboot: true
+    unattended_automatic_reboot_time: '03:00'
