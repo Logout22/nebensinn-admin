@@ -2,23 +2,31 @@
 - name: Set up services for nebensinn site
   hosts: site
   vars_prompt:
-    - name: postfix_relayhost_user
+    - name: exim4_client_user
       prompt: "Email user name?"
       private: no
 
-    - name: postfix_relayhost_pass
+    - name: exim4_client_password
       prompt: "Email password?"
 
   gather_facts: no
+  pre_tasks:
+  - name: create group ssl-cert (required for exim4 role)
+    group:
+      name: ssl-cert
+      state: present
   roles:
   - role: ansible-change-ssh-port
-  - role: ansible-role-postfix
-    postfix_domain: 'nebensinn.com'
-    postfix_notify_email: 'webmaster@nebensinn.com'
-    postfix_relay_server: 'smtp.ionos.de'
-    postfix_use_smtp: true
-    postfix_smtp_sasl_password_maps: 'hash:/etc/postfix/sasl_passwd'
-  - role: geerlingguy.postfix
+  - role: geerlingguy.nginx
+    #  - role: geerlingguy.certbot
+    #    certbot_create_if_missing: true
+    #    certbot_create_method: standalone
+    #    certbot_admin_email: webmaster@nebensinn.com
+    #    certbot_certs:
+    #    - domains:
+    #        - nebensinn.com
+    #    certbot_create_standalone_stop_services:
+    #    - nginx
   - role: jnv.unattended-upgrades
     unattended_origins_patterns:
     - 'origin=Debian,codename=${distro_codename}-updates'
@@ -28,3 +36,27 @@
     unattended_remove_unused_dependencies: true
     unattended_automatic_reboot: true
     unattended_automatic_reboot_time: '03:00'
+  - role: ansible-role-exim4
+    exim4_dc_eximconfig_configtype: satellite
+    exim4_dc_readhost: nebensinn.com
+    exim4_dc_smarthost: smtp.ionos.de::587
+    exim4_dc_hide_mailname: false
+    exim4_features_enable:
+      - name: 02_exim4-custom_options
+        group: main
+    exim4_custom_options:
+      sender_unqualified_hosts: "*"
+      recipient_unqualified_hosts: "*"
+    exim4_passwd_client:
+    - '*:{{exim4_client_user}}:{{exim4_client_password}}'
+  tasks:
+  - name: add root alias
+    lineinfile:
+      dest: "/etc/aliases"
+      regexp: "webmaster"
+      line: "root: webmaster"
+  - name: ensure exim is reloaded if need be
+    meta: flush_handlers
+  - name: send test email
+    mail:
+      subject: Test email from Ansible
