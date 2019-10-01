@@ -9,22 +9,21 @@
     - name: exim4_client_password
       prompt: "Email password?"
 
+    - name: exim4_target_address
+      prompt: "Target email address?"
+      private: no
+
   gather_facts: no
-  pre_tasks:
-  - name: create group ssl-cert (required for exim4 role)
-    group:
-      name: ssl-cert
-      state: present
   roles:
   - role: ansible-change-ssh-port
   - role: geerlingguy.nginx
     #  - role: geerlingguy.certbot
     #    certbot_create_if_missing: true
     #    certbot_create_method: standalone
-    #    certbot_admin_email: webmaster@nebensinn.com
+    #    certbot_admin_email: "webmaster@{{ansible_host}}"
     #    certbot_certs:
     #    - domains:
-    #        - nebensinn.com
+    #        - "{{ansible_host}}"
     #    certbot_create_standalone_stop_services:
     #    - nginx
   - role: jnv.unattended-upgrades
@@ -32,13 +31,13 @@
     - 'origin=Debian,codename=${distro_codename}-updates'
     - 'origin=Debian,codename=${distro_codename},label=Debian'
     - 'origin=Debian,codename=${distro_codename},label=Debian-Security'
-    unattended_mail: 'webmaster@nebensinn.com'
+    unattended_mail: 'webmaster@{{ansible_host}}'
     unattended_remove_unused_dependencies: true
     unattended_automatic_reboot: true
     unattended_automatic_reboot_time: '03:00'
   - role: ansible-role-exim4
     exim4_dc_eximconfig_configtype: satellite
-    exim4_dc_readhost: nebensinn.com
+    exim4_dc_readhost: "{{ansible_host}}"
     exim4_dc_smarthost: smtp.ionos.de::587
     exim4_dc_hide_mailname: false
     exim4_features_enable:
@@ -53,8 +52,8 @@
   - name: add root alias
     lineinfile:
       dest: "/etc/aliases"
-      regexp: "webmaster"
-      line: "root: webmaster"
+      regexp: "^root:.*$"
+      line: "root: {{exim4_target_address}}"
   - name: ensure exim is reloaded if need be
     meta: flush_handlers
   - name: send test email
