@@ -1,7 +1,6 @@
 - geerlingguy.nginx
 - geerlingguy.certbot
-- name: ansible-role-exim4
-  src: https://github.com/Logout22/ansible-role-exim4
+- adegtyarev.ansible_role_exim4
 - jnv.unattended-upgrades
 - name: change-ssh-port
   src: https://github.com/Logout22/ansible-change-ssh-port
