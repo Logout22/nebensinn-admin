@@ -1,3 +1,5 @@
 #!/usr/bin/env ansible-playbook
 ---
-- import_playbook: playbooks/10_services.yml
+- import_playbook: playbooks/10_ssh.yml
+- import_playbook: playbooks/20_webserver.yml
+- import_playbook: playbooks/30_services.yml

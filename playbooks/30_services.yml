@@ -1,5 +1,5 @@
 ---
-- name: Set up services for nebensinn site
+- name: Set up services
   hosts: site
   vars_prompt:
     - name: exim4_client_user
@@ -12,32 +12,7 @@
     - name: exim4_target_address
       prompt: "Target email address?"
       private: no
-
-  gather_facts: no
   roles:
-  - role: ansible-change-ssh-port
-  - role: geerlingguy.nginx
-    nginx_vhosts:
-    - listen: "443 ssl http2"
-      server_name: "{{ansible_host}}"
-      root: "/usr/share/nginx/html"
-      index: "index.html index.htm"
-      state: "present"
-      template: "{{ nginx_vhost_template }}"
-      extra_parameters: |
-        ssl_certificate     /etc/letsencrypt/live/{{ansible_host}}/fullchain.pem;
-        ssl_certificate_key /etc/letsencrypt/live/{{ansible_host}}/privkey.pem;
-        ssl_protocols       TLSv1.1 TLSv1.2 TLSv1.3;
-        ssl_ciphers         HIGH:!aNULL:!MD5;
-  - role: geerlingguy.certbot
-    certbot_create_if_missing: true
-    certbot_create_method: standalone
-    certbot_admin_email: webmaster@{{ansible_host}}
-    certbot_certs:
-    - domains:
-        - '{{ansible_host}}'
-    certbot_create_standalone_stop_services:
-    - nginx
   - role: jnv.unattended-upgrades
     unattended_origins_patterns:
     - 'origin=Debian,codename=${distro_codename}-updates'
