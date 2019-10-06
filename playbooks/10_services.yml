@@ -17,15 +17,15 @@
   roles:
   - role: ansible-change-ssh-port
   - role: geerlingguy.nginx
-    #  - role: geerlingguy.certbot
-    #    certbot_create_if_missing: true
-    #    certbot_create_method: standalone
-    #    certbot_admin_email: "webmaster@{{ansible_host}}"
-    #    certbot_certs:
-    #    - domains:
-    #        - "{{ansible_host}}"
-    #    certbot_create_standalone_stop_services:
-    #    - nginx
+  - role: geerlingguy.certbot
+    certbot_create_if_missing: true
+    certbot_create_method: standalone
+    certbot_admin_email: webmaster@{{ansible_host}}
+    certbot_certs:
+    - domains:
+        - '{{ansible_host}}'
+    certbot_create_standalone_stop_services:
+    - nginx
   - role: jnv.unattended-upgrades
     unattended_origins_patterns:
     - 'origin=Debian,codename=${distro_codename}-updates'
