@@ -43,6 +43,10 @@
         add_header X-Frame-Options DENY;
         add_header X-Content-Type-Options nosniff;
         add_header X-XSS-Protection "1; mode=block";
+        # error pages
+        error_page 301 /301.html;
+        error_page 404 /404.html;
+        error_page 502 /502.html;
   - role: geerlingguy.certbot
     certbot_create_if_missing: true
     certbot_create_method: standalone
