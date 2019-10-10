@@ -1,0 +1,7 @@
+---
+- name: Set up SSL
+  hosts: site
+  tasks:
+  - name: generate Diffie-Hellman parameters
+    openssl_dhparam:
+      path: "/etc/ssl/certs/dhparam.pem"
