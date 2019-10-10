@@ -15,7 +15,7 @@
         ssl_certificate_key /etc/letsencrypt/live/{{ansible_host}}/privkey.pem;
         # recommended settings from https://cipherli.st/
         ssl_protocols TLSv1.2 TLSv1.3;
-        ssl_prefer_server_ciphers on; 
+        ssl_prefer_server_ciphers on;
         ssl_dhparam /etc/ssl/certs/dhparam.pem;
         ssl_ciphers EECDH+AESGCM:EDH+AESGCM;
         ssl_ecdh_curve secp384r1;
