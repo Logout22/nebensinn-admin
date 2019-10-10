@@ -2,5 +2,6 @@
 ---
 - import_playbook: playbooks/10_ssh.yml
 - import_playbook: playbooks/15_ssl.yml
+- import_playbook: playbooks/19_static_page.yml
 - import_playbook: playbooks/20_webserver.yml
 - import_playbook: playbooks/30_services.yml

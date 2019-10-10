@@ -1,0 +1,19 @@
+---
+- name: Load static home page
+  hosts: site
+  vars:
+    repository_url: "https://github.com/Logout22/nebensinn-www.git"
+    destination_path: "/var/www/static_html"
+    git_directory: "/var/www/static_html.git"
+  tasks:
+  - name: install Git
+    package:
+      name: git
+      state: present
+  - name: clone home page
+    git:
+      repo: "{{repository_url}}"
+      dest: "{{destination_path}}"
+      separate_git_dir: "{{git_directory}}"
+      force: yes
+      recursive: yes
