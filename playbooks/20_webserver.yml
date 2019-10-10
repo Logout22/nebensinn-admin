@@ -6,7 +6,7 @@
     nginx_vhosts:
     - listen: "443 ssl http2"
       server_name: "{{ansible_host}}"
-      root: "/usr/share/nginx/html"
+      root: "/var/www/static_html"
       index: "index.html index.htm"
       state: "present"
       template: "{{ nginx_vhost_template }}"
