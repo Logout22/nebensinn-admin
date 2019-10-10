@@ -22,7 +22,7 @@
     unattended_remove_unused_dependencies: true
     unattended_automatic_reboot: true
     unattended_automatic_reboot_time: '03:00'
-  - role: ansible-role-exim4
+  - role: adegtyarev.ansible_role_exim4
     exim4_dc_eximconfig_configtype: satellite
     exim4_dc_readhost: "{{ansible_host}}"
     exim4_dc_smarthost: smtp.ionos.de::587
