@@ -1,0 +1,10 @@
+---
+- name: Restore Ghost blog
+  hosts: site
+  tasks:
+  - name: restore Ghost
+    # TODO
+  - name: set up Ghost back up Cron job
+    # TODO
+  - name: test Ghost back up Cron job
+    # TODO
