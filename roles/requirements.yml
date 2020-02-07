@@ -4,3 +4,5 @@
 - jnv.unattended-upgrades
 - name: change-ssh-port
   src: https://github.com/Logout22/ansible-change-ssh-port
+- name: ansible-role-ghost-backup
+  src: https://github.com/Logout22/ansible-role-ghost-backup
