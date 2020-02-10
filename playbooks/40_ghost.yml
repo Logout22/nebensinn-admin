@@ -1,9 +1,12 @@
 ---
 - name: Restore Ghost blog
   hosts: site
+  roles:
+  - role: ansible-role-ghost-restore
+  aws_s3_bucket_name: ""
+  aws_access_key: ""
+  aws_secret_key: ""
   tasks:
-  - name: restore Ghost
-    # TODO
   - name: set up Ghost back up Cron job
     # TODO
   - name: test Ghost back up Cron job
