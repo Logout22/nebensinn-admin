@@ -17,4 +17,4 @@ Scripts for bootstrapping and administration of the nebensinn VPS
 
 - Run Ansible playbook:
 
-      ansible-playbook site.yml
+      ansible-playbook -e aws_access_key=$AWS_ACCESS_KEY_ID -e aws_secret_key=$AWS_SECRET_ACCESS_KEY site.yml
