@@ -7,14 +7,12 @@ Scripts for bootstrapping and administration of the nebensinn VPS
       python3 -m venv venv
       source venv/bin/activate
 
-- Install Ansible and Python requirements:
+- Start the test docker container in `test_container`
 
-      pip install -r requirements.txt
+      cd test_container
+      sudo ./start.sh
 
-- Install Ansible roles:
+- Run Ansible test
 
-      ansible-galaxy install -r roles/requirements.yml
-
-- Run Ansible playbook:
-
-      ansible-playbook -e aws_access_key=$AWS_ACCESS_KEY_ID -e aws_secret_key=$AWS_SECRET_ACCESS_KEY site.yml
+      cd ..
+      ./run_ansible.sh
