@@ -1,0 +1,9 @@
+version: "3.3"
+services:
+  testmachine:
+    build:
+      context: .
+    ports:
+      - "80:80"
+      - "443:443"
+      - "5365:5365"
