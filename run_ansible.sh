@@ -6,4 +6,4 @@ set -o nounset
 source venv/bin/activate
 pip install -r requirements.txt
 ansible-galaxy install -r roles/requirements.yml
-ansible-playbook -i test_container/hosts site.yml
+ansible-playbook -i hosts site.yml

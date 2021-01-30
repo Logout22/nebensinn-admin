@@ -1,3 +1,2 @@
 venv/
-testmachine
-testmachine.pub
+/hosts

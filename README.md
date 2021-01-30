@@ -7,12 +7,7 @@ Scripts for bootstrapping and administration of the nebensinn VPS
       python3 -m venv venv
       source venv/bin/activate
 
-- Start the test docker container in `test_container`
-
-      cd test_container
-      sudo ./start.sh
-
-- Run Ansible test
+- Run Ansible
 
       cd ..
       ./run_ansible.sh
