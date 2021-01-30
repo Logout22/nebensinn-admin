@@ -1,6 +1,7 @@
 FROM debian:buster
 
 RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y \
+    ca-certificates \
     iptables-persistent \
     openssh-server \
     python
