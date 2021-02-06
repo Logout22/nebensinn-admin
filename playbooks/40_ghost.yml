@@ -2,21 +2,25 @@
 - name: Restore Ghost blog
   hosts: site
   vars_prompt:
-    - name: aws_s3_bucket_name
+    - name: local_aws_s3_bucket_name
       prompt: "S3 bucket name?"
       private: no
 
-    - name: aws_access_key
+    - name: local_aws_access_key
       prompt: "AWS Access Key?"
       private: no
 
-    - name: aws_secret_key
+    - name: local_aws_secret_key
       prompt: "AWS Secret Access Key?"
   roles:
+  - role: geerlingguy.nodejs
+    nodejs_version: "12.x"
+    nodejs_npm_global_packages:
+    - name: ghost-cli
   - role: ansible-role-ghost-restore
-    aws_s3_bucket_name: "{{aws_s3_bucket_name}}"
-    aws_access_key: "{{aws_access_key}}"
-    aws_secret_key: "{{aws_secret_key}}"
+    aws_s3_bucket_name: "{{local_aws_s3_bucket_name}}"
+    aws_access_key: "{{local_aws_access_key}}"
+    aws_secret_key: "{{local_aws_secret_key}}"
   #tasks:
   ## TODO
   ## - install systemd unit for Ghost

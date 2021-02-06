@@ -1,4 +1,5 @@
 - geerlingguy.nginx
+- geerlingguy.nodejs
 - geerlingguy.certbot
 - adegtyarev.ansible_role_exim4
 - jnv.unattended-upgrades
