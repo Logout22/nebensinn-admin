@@ -1,6 +1,8 @@
 ---
 - name: Restore Ghost blog
   hosts: site
+  vars:
+      local_ghost_address: "https://{{ansible_host}}/bookclub/ghost/"
   vars_prompt:
     - name: local_aws_s3_bucket_name
       prompt: "S3 bucket name?"
@@ -21,9 +23,35 @@
     aws_s3_bucket_name: "{{local_aws_s3_bucket_name}}"
     aws_access_key: "{{local_aws_access_key}}"
     aws_secret_key: "{{local_aws_secret_key}}"
-  #tasks:
+    ghost_address: "{{local_ghost_address}}"
+  tasks:
+  - name: make sure Ghost is stopped
+    command: /bin/sh -lc "ghost stop"
+    # the command itself is idempotent
+    changed_when: False
+    become: yes
+    become_method: su
+    become_user: "ghost"
+    args:
+      chdir: "/var/www/ghost"
+  - name: copy Ghost service file
+    copy:
+      src: "ghost-instance.service"
+      dest: "/etc/systemd/system"
+  - name: enable Ghost service
+    systemd:
+      name: "ghost-instance"
+      daemon_reload: yes
+      enabled: yes
+      state: started
+  - name: check if Ghost is running
+    uri:
+      url: "{{local_ghost_address}}"
+    register: ghost_running
+    until: ghost_running is not failed
+    retries: 3
+    delay: 10
   ## TODO
-  ## - install systemd unit for Ghost
   ## - install cron hourly script for availability check
   #- name: set up Ghost back up Cron job
   #  # TODO

@@ -4,7 +4,7 @@ Description=Ghost systemd service
 [Service]
 Type=simple
 WorkingDirectory=/var/www/ghost
-User=ubuntu
+User=ghost
 ExecStart=/usr/bin/node current/index.js
 Restart=no
 Environment="NODE_ENV=production"
