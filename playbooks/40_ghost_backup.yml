@@ -1,0 +1,15 @@
+---
+- name: Set up backup of Ghost blog
+  hosts: site
+#tasks:
+#- name: set up Ghost back up Cron job
+#  # TODO
+#  # - download repo ansible-role-ghost-backup
+#  # - set up virtualenv
+#  # - pip install ansible
+#  # - copy ansible script
+#  # - copy cron script
+#- name: test Ghost back up Cron job
+#  # TODO
+#  # - run cron script
+#  # - check AWS S3 change time stamp
