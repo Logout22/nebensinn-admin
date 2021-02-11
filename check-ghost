@@ -1,2 +1,0 @@
-#!/bin/sh
-su -lc ./check-ghost.sh ubuntu

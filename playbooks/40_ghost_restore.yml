@@ -51,5 +51,15 @@
     until: ghost_running is not failed
     retries: 3
     delay: 10
-  ## TODO
-  ## - install cron hourly script for availability check
+  - name: add Ghost availability check script
+    template:
+      src: "check-ghost.tpl.sh"
+      dest: "/usr/local/bin/check-ghost.sh"
+      mode: "+x"
+    tags: ghost_cron
+  - name: add cron entry
+    copy:
+      src: "check-ghost"
+      dest: "/etc/cron.hourly"
+      mode: "+x"
+    tags: ghost_cron
