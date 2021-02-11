@@ -6,4 +6,6 @@ set -o nounset
 source venv/bin/activate
 pip install -r requirements.txt
 ansible-galaxy install -r roles/requirements.yml
-ansible-playbook -i hosts ${1:-site.yml}
+playbook=${1:-site.yml}
+shift
+ansible-playbook -i hosts "$playbook" "$@"
