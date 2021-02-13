@@ -1,10 +1,18 @@
 ---
 - name: Set up backup of Ghost blog
   hosts: site
-#tasks:
+  vars:
+    repository_url: "https://github.com/Logout22/ansible-role-ghost-backup.git"
+    destination_path: "/etc/ansible/roles/ansible-role-ghost-backup"
+  tasks:
+  - name: clone ansible role
+    git:
+      repo: "{{repository_url}}"
+      dest: "{{destination_path}}"
+      force: yes
+      recursive: yes
 #- name: set up Ghost back up Cron job
 #  # TODO
-#  # - download repo ansible-role-ghost-backup
 #  # - set up virtualenv
 #  # - pip install ansible
 #  # - copy ansible script
