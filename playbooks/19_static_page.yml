@@ -7,7 +7,8 @@
     git_directory: "/var/www/static_html.git"
   tasks:
   - name: install Git
-    package:
+    apt:
+      update_cache: yes
       name: git
       state: present
   - name: clone home page
