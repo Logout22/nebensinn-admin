@@ -1,7 +1,8 @@
 ---
-- name: Restore Ghost blog
+- name: Set up Ghost blog
   hosts: site
   vars:
+      ghost_aws_directory: "/home/ghost/.aws"
       local_ghost_address: "https://{{ansible_host}}/bookclub/ghost/"
   vars_prompt:
     - name: local_aws_s3_bucket_name
@@ -63,3 +64,32 @@
       dest: "/etc/cron.hourly"
       mode: "+x"
     tags: ghost_cron
+  - name: ensure target directory exists
+    file:
+      path: "{{ghost_aws_directory}}"
+      owner: "ghost"
+      state: directory
+      mode: 0755
+    tags: ghost_backup
+  - name: add aws credentials
+    template:
+      src: "aws-credentials.tpl"
+      dest: "{{ghost_aws_directory}}/credentials"
+      mode: "400"
+      owner: ghost
+    tags: ghost_backup
+  - name: add Ghost upload script
+    template:
+      src: "upload-ghost-archive.tpl.py"
+      dest: "/usr/local/bin/upload-ghost-archive.py"
+      mode: "+x"
+    tags: ghost_backup
+  - name: add cron entry
+    copy:
+      src: "backup-ghost"
+      dest: "/etc/cron.daily"
+      mode: "+x"
+    tags: ghost_backup
+  - name: test cron entry
+    command: /etc/cron.daily/backup-ghost
+    tags: ghost_backup
