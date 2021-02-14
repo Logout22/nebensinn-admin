@@ -52,6 +52,11 @@
     until: ghost_running is not failed
     retries: 3
     delay: 10
+  - name: install curl
+    apt:
+      name: curl
+      state: present
+    tags: ghost_cron
   - name: add Ghost availability check script
     template:
       src: "check-ghost.tpl.sh"
@@ -63,6 +68,9 @@
       src: "check-ghost"
       dest: "/etc/cron.hourly"
       mode: "+x"
+    tags: ghost_cron
+  - name: test cron entry
+    command: /etc/cron.hourly/check-ghost
     tags: ghost_cron
   - name: ensure target directory exists
     file:
