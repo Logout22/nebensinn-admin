@@ -9,5 +9,4 @@ Scripts for bootstrapping and administration of the nebensinn VPS
 
 - Run Ansible
 
-      cd ..
       ./run_ansible.sh
