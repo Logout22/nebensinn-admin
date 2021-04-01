@@ -18,6 +18,7 @@
     - 'origin=Debian,codename=${distro_codename}-updates'
     - 'origin=Debian,codename=${distro_codename},label=Debian'
     - 'origin=Debian,codename=${distro_codename},label=Debian-Security'
+    - 'origin=Node Source,codename=${distro_codename},label=Node Source'
     unattended_mail: 'webmaster@{{ansible_host}}'
     unattended_remove_unused_dependencies: true
     unattended_automatic_reboot: true
