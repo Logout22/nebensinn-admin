@@ -1,2 +1,2 @@
 #!/bin/sh
-su -lc check-ghost.sh ghost
+/usr/local/bin/check-ghost.sh
