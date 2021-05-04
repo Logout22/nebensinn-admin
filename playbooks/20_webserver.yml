@@ -57,3 +57,14 @@
         - 'www.{{ansible_host}}'
     certbot_create_standalone_stop_services:
     - nginx
+  tasks:
+  - name: add Nginx stop hook for letsencrypt
+    copy:
+      src: "stop-nginx.sh"
+      dest: "/etc/letsencrypt/renewal-hooks/pre"
+      mode: "+x"
+  - name: add Nginx start hook for letsencrypt
+    copy:
+      src: "start-nginx.sh"
+      dest: "/etc/letsencrypt/renewal-hooks/post"
+      mode: "+x"
