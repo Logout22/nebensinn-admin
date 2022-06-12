@@ -17,7 +17,7 @@
       prompt: "AWS Secret Access Key?"
   roles:
   - role: geerlingguy.nodejs
-    nodejs_version: "14.x"
+    nodejs_version: "16.x"
     nodejs_npm_global_packages:
     - name: ghost-cli
   - role: ansible-role-ghost-restore
